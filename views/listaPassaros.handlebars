@@ -1,0 +1,64 @@
+<h3>LISTA DE PÁSSAROS</h3>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Autor</th>
+        <th>Preço</th>
+        <th>Opções</th>
+    </tr>
+    {{#passaros}}
+    <tr>
+        <th>{{id_livros}}</th>
+        <th>{{nome}}</th>
+        <th>{{autor}}</th>
+        <th>{{preco}}</th>
+        <th>
+            <form action="/alterar-livro-form" method="POST">
+                <input type="hidden" name="id" value="{{id_livros}}">
+                <input type="hidden" name="nome" value="{{nome}}">
+                <button type="submit" class="btn">Alterar</button>
+            </form>
+
+            <form action="/deletar-livro" method="POST">
+                <input type="hidden" name="id" value="{{id_livros}}">
+                <button type="submit" class="btn">Deletar</button>
+            </form>
+        </th>
+    </tr>
+    {{/passaros}}
+
+    {{#selecionado}}
+    <tr>
+        <th>{{id_livros}}</th>
+        <th>{{nome}}</th>
+        <th>{{autor}}</th>
+        <th>{{preco}}</th>
+        <th>
+            <form action="/alterar-livro-form" method="POST">
+                <input type="hidden" name="id" value="{{id_livros}}">
+                <input type="hidden" name="nome" value="{{nome}}">
+                <button type="submit" class="btn">Alterar</button>
+            </form>
+
+            <form action="/deletar-livro" method="POST">
+                <input type="hidden" name="id" value="{{id_livros}}">
+                <button type="submit" class="btn">Deletar</button>
+            </form>
+        </th>
+    </tr>
+    {{/selecionado}}
+</table>
+
+<p>
+
+{{msg}}
+<p>
+
+<a href="/formulario-passaros">Adicionar Novo Pássaro</a>
+
+<form action="/pesquisa-passaros" method="POST">
+    <input type="text" name="id" value="{{id_livros}}">
+    <button type="submit" class="btn">?</button>
+</form>

@@ -1,0 +1,61 @@
+<h3>LISTA DE PESSOAS</h3>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Opções</th>
+    </tr>
+    {{#pessoas}}
+    <tr>
+        <th>{{id}}</th>
+        <th>{{nome}}</th>
+        <th>{{idade}}</th>
+        <th>
+            <form action="/alterar-pessoa-form" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="nome" value="{{nome}}">
+                <input type="hidden" name="idade" value="{{idade}}">
+                <button type="submit" class="btn">Alterar</button>
+            </form>
+
+            <form action="/deletar-pessoa" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <button type="submit" class="btn">Deletar</button>
+            </form>
+        </th>
+    </tr>
+    {{/pessoas}}
+
+    {{#selecionado}}
+    <tr>
+        <th>{{id}}</th>
+        <th>{{nome}}</th>
+        <th>{{idade}}</th>
+        <th>
+            <form action="/alterar-pessoa-form" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="nome" value="{{nome}}">
+                <input type="hidden" name="idade" value="{{idade}}">
+                <button type="submit" class="btn">Alterar</button>
+            </form>
+
+            <form action="/deletar-pessoa" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <button type="submit" class="btn">Deletar</button>
+            </form>
+        </th>
+    </tr>
+    {{/selecionado}}
+</table>
+
+{{msg}}
+
+<a href="/formulario-pessoas">Adicionar Nova Pessoa</a>
+
+
+<form action="/pesquisa-pessoas" method="POST">
+    <input type="text" name="id" value="{{id}}">
+    <button type="submit" class="btn">?</button>
+</form>

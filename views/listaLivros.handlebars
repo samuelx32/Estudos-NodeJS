@@ -1,0 +1,57 @@
+<h3>LISTA DE LIVROS</h3>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Opções</th>
+    </tr>
+    {{#livros}}
+    <tr>
+        <th>{{id}}</th>
+        <th>{{nome}}</th>
+        <th>
+            <form action="/alterar-livro-form" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="nome" value="{{nome}}">
+                <button type="submit" class="btn">Alterar</button>
+            </form>
+
+            <form action="/deletar-livro" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <button type="submit" class="btn">Deletar</button>
+            </form>
+        </th>
+    </tr>
+    {{/livros}}
+
+    {{#selecionado}}
+    <tr>
+        <th>{{id}}</th>
+        <th>{{nome}}</th>
+        <th>
+            <form action="/alterar-livro-form" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="nome" value="{{nome}}">
+                <button type="submit" class="btn">Alterar</button>
+            </form>
+
+            <form action="/deletar-livro" method="POST">
+                <input type="hidden" name="id" value="{{id}}">
+                <button type="submit" class="btn">Deletar</button>
+            </form>
+        </th>
+    </tr>
+    {{/selecionado}}
+</table>
+
+<p>
+
+{{msg}}
+
+<a href="/formulario-livros">Adicionar Novo Livro</a>
+
+<form action="/pesquisa-livros" method="POST">
+    <input type="text" name="id" value="{{id}}">
+    <button type="submit" class="btn">?</button>
+</form>
