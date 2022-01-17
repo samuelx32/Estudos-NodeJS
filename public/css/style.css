@@ -1,0 +1,44 @@
+*{
+    background-color: black;
+    color:#088A08;
+}
+
+th{
+    padding-right:100px;
+    padding-bottom:10px;
+}
+
+.btn{
+    padding:2px 20px;
+    margin-top:8px;
+}
+
+.btn:hover{
+    background-color: grey;
+}
+
+input{
+    color:white;
+}
+
+body{
+    padding:0.5em 1em;
+}
+
+#servidor{
+    position: relative;
+    float: left;
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#servidor form{
+    border:1px solid green;
+}
+
+#conteudo{
+    padding:4em 16em;
+}

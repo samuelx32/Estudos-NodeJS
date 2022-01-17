@@ -1,59 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servidor Node</title>
+    <title>{{titulo}}</title>
 
-    <style>
-        *{
-            background-color: black;
-            color:#088A08;
-        }
-
-        th{
-            padding-right:100px;
-            padding-bottom:10px;
-        }
-
-        .btn{
-            padding:2px 20px;
-            margin-top:8px;
-        }
-
-        .btn:hover{
-            background-color: grey;
-        }
-
-        input{
-            color:white;
-        }
-
-        body{
-            padding:0.5em 1em;
-        }
-
-        #servidor{
-            position: relative;
-            float: left;
-            width:100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        #servidor form{
-            border:1px solid green;
-        }
-
-        #conteudo{
-            padding:4em 16em;
-        }
-
-
-    </style>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="servidor">
@@ -62,11 +15,11 @@
             <input type="button" value="<<--" onClick="history.go(-1)"> 
             <input type="button" value="O" onClick="history.go(0)"> 
             <input type="button" value="-->>" onCLick="history.forward()"> 
-            
         </form>
     </div>
 
     <div id="conteudo">
+        <a href="/">Main</a>
         {{{body}}}
     </div>
     

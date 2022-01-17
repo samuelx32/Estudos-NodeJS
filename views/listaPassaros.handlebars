@@ -15,13 +15,15 @@
         <th>{{autor}}</th>
         <th>{{preco}}</th>
         <th>
-            <form action="/alterar-livro-form" method="POST">
+            <form action="/alterar-passaro-form" method="POST">
                 <input type="hidden" name="id" value="{{id_livros}}">
                 <input type="hidden" name="nome" value="{{nome}}">
+                <input type="hidden" name="autor" value="{{autor}}">
+                <input type="hidden" name="preco" value="{{preco}}">
                 <button type="submit" class="btn">Alterar</button>
             </form>
 
-            <form action="/deletar-livro" method="POST">
+            <form action="/deletar-passaro" method="POST">
                 <input type="hidden" name="id" value="{{id_livros}}">
                 <button type="submit" class="btn">Deletar</button>
             </form>
@@ -36,13 +38,13 @@
         <th>{{autor}}</th>
         <th>{{preco}}</th>
         <th>
-            <form action="/alterar-livro-form" method="POST">
+            <form action="/alterar-passaro-form" method="POST">
                 <input type="hidden" name="id" value="{{id_livros}}">
                 <input type="hidden" name="nome" value="{{nome}}">
                 <button type="submit" class="btn">Alterar</button>
             </form>
 
-            <form action="/deletar-livro" method="POST">
+            <form action="/deletar-passaro" method="POST">
                 <input type="hidden" name="id" value="{{id_livros}}">
                 <button type="submit" class="btn">Deletar</button>
             </form>

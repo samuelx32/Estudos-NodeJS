@@ -11,6 +11,7 @@ server.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));
 server.set('view engine', 'handlebars');
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
+server.use(express.static('public'));
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -18,7 +19,15 @@ const connection = mysql.createConnection({
     user     : 'root',
     password : 'pantera2256!',
     database : 'livraria'
-});
+})
+
+connection.connect(function(err) {
+    if (err) {
+        console.error('error connecting: ' + err.stack);
+    }else{
+        console.log('connected as id ' + connection.threadId);
+    }
+})
 
 
 var quantidadePessoas = 1;
@@ -27,51 +36,42 @@ var pessoas = [{ id: 0, nome: "João", idade: 12 }, { id: 1, nome: "Saulo", idad
 var livros = [{ id: 0, nome: "Senhor das Moscas" }, { id: 1, nome: "Admiravel Mundo Novo" }, { id: 2, nome: "Frankenstein" }];
 
 
+
 //Geral
 
 server.get('/', function (req, res) {
-    res.render('index');
-})
-
-server.get('/listas', function (req, res) {
-    connection.connect(function(err) {
-        if (err) {
-            console.error('error connecting: ' + err.stack);
-            return;
-        }
-        console.log('connected as id ' + connection.threadId);
-    });
-    res.render('listas');
+    res.render('index',{titulo: "Servidor Node"});
 })
 
 server.get('/encerrar', function (req, res) {
     connection.end();
-    res.render('encerrar');
+    msg="Encerrado";
+    res.render('resposta', {msg, titulo: "Encerrado"});
 })
 
 
 //Pessoas
 
 server.get('/lista-pessoas', function (req, res) {
-    res.render('listaPessoas', { pessoas });
+    res.render('listaPessoas', { pessoas, titulo: "Lista de Pessoas" });
 })
 
 server.get('/formulario-pessoas', (req, res) => {
-    res.render('formulario');
+    res.render('formulario',{titulo: "Formulário"});
 })
 
 server.post('/adicionar-item-pessoa', (req, res) => {
     quantidadePessoas++;
     pessoas.push({ id: quantidadePessoas, nome: req.body.nome, idade: req.body.idade });
     var msg = "Adicionado";
-    res.render('resposta', { msg });
+    res.render('resposta', { msg, titulo: "Adicionado" });
 })
 
 server.post('/alterar-pessoa-form', (req, res) => {
     var id = req.body.id;
     var nome = req.body.nome;
     var idade = req.body.idade;
-    res.render('alterarPessoaForm', { id, nome, idade });
+    res.render('alterarPessoaForm', { id, nome, idade, titulo: "Alterar Pessoa" });
 })
 
 server.post('/alterar-pessoa', (req, res) => {
@@ -82,8 +82,8 @@ server.post('/alterar-pessoa', (req, res) => {
             pessoas[i] = { id: req.body.id, nome: req.body.nome, idade: req.body.idade };
         }
     }
-    var msg = "Adicionado";
-    res.render('resposta', { msg });
+    var msg = "Alterado";
+    res.render('resposta', { msg, titulo: "Alterado" });
 })
 
 server.post('/deletar-pessoa', (req, res) => {
@@ -95,7 +95,7 @@ server.post('/deletar-pessoa', (req, res) => {
         }
     }
     var msg = "Removido";
-    res.render('resposta', { msg });
+    res.render('resposta', { msg, titulo: "Removido" });
 })
 
 server.post('/pesquisa-pessoas', (req, res) => {
@@ -106,31 +106,31 @@ server.post('/pesquisa-pessoas', (req, res) => {
     if (id > quantidadePessoas){
         msg = "Nada Encontrado.";
     }
-    res.render('listaPessoas', { selecionado, msg });
+    res.render('listaPessoas', { selecionado, msg, titulo: "Pesquisa" });
 })
 
 
 //Livros
 
 server.get('/lista-livros', function (req, res) {
-    res.render('listaLivros', {livros});
+    res.render('listaLivros', {livros, titulo: "Lista de Livros"});
 })
 
 server.get('/formulario-livros', (req, res) => {
-    res.render('formularioLivros');
+    res.render('formularioLivros', {titulo: 'Formulário Livros'});
 })
 
 server.post('/adicionar-item-livro', (req, res) => {
     quantidadeLivros++;
     livros.push({ id: quantidadeLivros, nome: req.body.nome });
     var msg = "Adicionado";
-    res.render('resposta', { msg });
+    res.render('resposta', { msg, titulo: 'Adicionado'});
 })
 
 server.post('/alterar-livro-form', (req, res) => {
     var id = req.body.id;
     var nome = req.body.nome;
-    res.render('alterarLivroForm', { id, nome });
+    res.render('alterarLivroForm', { id, nome, titulo: 'Alterar Livro' });
 })
 
 server.post('/alterar-livro', (req, res) => {
@@ -142,7 +142,7 @@ server.post('/alterar-livro', (req, res) => {
         }
     }
     var msg = "Adicionado";
-    res.render('resposta', { msg });
+    res.render('resposta', { msg, titulo: 'Alterado' });
 })
 
 server.post('/deletar-livro', (req, res) => {
@@ -155,7 +155,7 @@ server.post('/deletar-livro', (req, res) => {
     }
 
     var msg = "Removido";
-    res.render('resposta', { msg });
+    res.render('resposta', { msg, titulo: 'Deletado' });
 });
 
 server.post('/pesquisa-livros', (req, res) => {
@@ -167,7 +167,7 @@ server.post('/pesquisa-livros', (req, res) => {
         msg = "Nada Encontrado.";
     }
 
-    res.render('listaLivros', { selecionado, msg });
+    res.render('listaLivros', { selecionado, msg, titulo: 'Pesquisa' });
 });
 
 //Passaros
@@ -175,7 +175,7 @@ server.post('/pesquisa-livros', (req, res) => {
 server.get('/lista-passaros', function (req, res) {
     connection.query('SELECT * FROM livros', function (error, results, fields) {
         var passaros = results;
-        res.render('listaPassaros', { passaros });
+        res.render('listaPassaros', { passaros, titulo: 'Lista de Pássaros' });
     });
 })
 
@@ -188,12 +188,12 @@ server.post('/pesquisa-passaros', (req, res) => {
         if (error || results == ""){
             msg = "Nada Encontrado: \n" + error;
         }
-        res.render('listaPassaros', { selecionado, msg });
+        res.render('listaPassaros', { selecionado, msg, titulo: 'Pesquisa' });
     });
 })
 
 server.get('/formulario-passaros', (req, res) => {
-    res.render('formularioPassaros');
+    res.render('formularioPassaros', {titulo: 'Formulário Pássaros'});
 })
 
 server.post('/adicionar-item-passaro', (req, res) => {
@@ -203,11 +203,41 @@ server.post('/adicionar-item-passaro', (req, res) => {
         if(error){
             msg = "Não adicionado: "+error;
         }
-        res.render('resposta', { msg });
+        res.render('resposta', { msg, titulo: 'Adicionado' });
     });
     
 })
 
+server.post('/alterar-passaro-form', (req, res) => {
+    var id = req.body.id;
+    var nome = req.body.nome;
+    var autor = req.body.autor;
+    var preco = req.body.preco;
+    res.render('alterarPassaroForm', { id, nome, autor, preco, titulo: 'Alterar' });
+})
+
+
+server.post('/alterar-passaro', (req, res) => {
+    var msg = "Adicionado";
+
+    connection.query('UPDATE livros SET nome=?, autor=?, preco=? WHERE id_livros=?',[req.body.nome, req.body.autor, req.body.preco, req.body.id],function(error, results, fields){
+        if(error){
+            msg = "Não adicionado: "+error;
+        }
+        res.render('resposta', { msg, titulo: 'Alterado' });
+    })
+})
+
+server.post('/deletar-passaro', (req, res) => {
+    var msg = "Deletado";
+
+    connection.query('DELETE FROM livros WHERE id_livros=?',[req.body.id], function(error,results,fields){
+        if(error){
+            msg = "Não foi excluído: "+error;
+        }
+        res.render('resposta', { msg, titulo: 'Deletado' });
+    })
+})
 
 
 server.listen(3000); 
